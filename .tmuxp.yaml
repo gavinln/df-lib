@@ -1,0 +1,15 @@
+session_name: df-lib
+start_directory: "."
+windows:
+- window_name: edit-run
+  layout: even-vertical
+  focus: true
+  shell_command_before:
+    - echo initial command
+  panes:
+    - shell_command: poetry shell
+      focus: true
+    - shell_command: poetry shell
+- window_name: git
+  panes:
+    - shell_command: poetry run lazygit
