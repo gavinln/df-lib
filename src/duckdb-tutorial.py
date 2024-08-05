@@ -1,5 +1,8 @@
 """
 https://duckdb.org/docs/api/python/overview
+https://duckdb.org/docs/api/python/data_ingestion
+https://duckdb.org/docs/api/python/dbapi
+https://duckdb.org/docs/api/python/relational_api
 """
 
 import logging
@@ -12,6 +15,8 @@ import duckdb
 import pandas as pd
 import polars as pl
 import pyarrow as pa
+
+from faker import Faker
 
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
@@ -175,7 +180,7 @@ def relational_api():
     r1.except_(r2).show()
 
     r1.filter("id > 6").limit(2).show()
-    
+
     r1.intersect(r2).show()
 
     r1.join(r2, "r1.id - 5 = r2.id").show()
@@ -187,10 +192,137 @@ def relational_api():
     r1.union(r2).show()
 
 
+def generate_random_name() -> str:
+    faker = Faker()
+    return faker.name()
+
+
+def my_function(x: int) -> str:
+    return str(x)
+
+
+def function_api():
+    con = duckdb.connect()
+
+    con.create_function("generate_random_name", generate_random_name)
+    con.create_function("my_func", my_function)
+
+    con.sql("select generate_random_name()").show()
+    con.sql("select my_func(42) from range(2)").show()
+
+    con.remove_function("generate_random_name")
+    con.remove_function("my_func")
+
+
+def extensions_api():
+    sql = """
+        select extension_name, loaded, installed
+        from duckdb_extensions()
+    """
+    duckdb.sql(sql).show()
+
+
+def transaction_sql():
+    sql = """
+        CREATE TABLE person (name VARCHAR, age BIGINT);
+
+        BEGIN TRANSACTION;
+        INSERT INTO person VALUES ('Alice', 52);
+        COMMIT;
+
+        BEGIN TRANSACTION;
+        DELETE FROM person WHERE name = 'Alice';
+        INSERT INTO person VALUES ('Bob', 39);
+        ROLLBACK;
+    """
+    duckdb.sql(sql)
+    duckdb.sql("select * from person").show()
+
+
+def select_sql():
+    sql = """
+        -- create two tables
+        CREATE TABLE lang (
+            lang_id INT4 PRIMARY KEY,
+            name VARCHAR
+        );
+
+        INSERT INTO lang VALUES (1, 'python'), (2, 'sql'), (3, 'java');
+
+        CREATE TABLE review (
+            review_id INT4 PRIMARY KEY,
+            review VARCHAR,
+            rating INT4,
+            lang_id INT4,
+            FOREIGN KEY (lang_id) REFERENCES lang(lang_id)
+        );
+
+        INSERT INTO review VALUES (1, 'awesome', 4, 1), (2, 'excellent', 5, 1);
+        INSERT INTO review VALUES (3, 'good', 3, 2);
+    """
+    duckdb.sql(sql)
+
+    duckdb.sql("select * from lang").show()
+    duckdb.sql("select * from review").show()
+    duckdb.sql("select avg(rating) from review").show()
+    duckdb.sql("select avg(rating), lang_id from review group by lang_id").show()
+
+    duckdb.sql("""
+        select
+            name, review, rating
+        from lang
+            inner join review
+                on lang.lang_id = review.lang_id
+    """).show()
+
+    duckdb.sql("""
+        select
+            name, review, rating
+        from lang
+            inner join review using(lang_id)
+        order by rating desc
+    """).show()
+
+    duckdb.sql("""
+        select
+            name, review, rating
+        from lang
+            left join review using(lang_id)
+    """).show()
+
+    duckdb.sql("""
+        select
+            review, rating
+        from review
+        where rating = (select max(rating) from review)
+    """).show()
+
+    duckdb.sql("""
+        select
+            name, avg(rating)
+        from lang
+            inner join review using(lang_id)
+        group by name
+    """).show()
+
+    duckdb.sql("""
+        select
+            name, avg(rating)
+        from lang
+            inner join review using(lang_id)
+        group by name
+        having avg(rating) > 4
+    """).show()
+
+
 def main():
-    # basics()
-    # db_api()
+    basics()
+    db_api()
     relational_api()
+    function_api()
+    extensions_api()
+    transaction_sql()
+    select_sql()
 
 
 if __name__ == "__main__":
