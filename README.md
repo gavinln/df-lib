@@ -18,6 +18,8 @@ Compare Python dataframe and similar libraries
 
 [Polars][200] is a dataframe library powered by a multithreaded, vectorized query engine, written in Rust that supports larger than RAM datasets.
 
+[200]: https://github.com/pola-rs/polars
+
 ## Daft
 
 [Daft][300] is a distributed dataframe library for Python designed for the cloud and powered by Rust.
