@@ -5,19 +5,16 @@ https://duckdb.org/docs/api/python/dbapi
 https://duckdb.org/docs/api/python/relational_api
 """
 
+import datetime as dt
 import logging
 import pathlib
 import tempfile
-import datetime as dt
 
 import duckdb
-
 import pandas as pd
 import polars as pl
 import pyarrow as pa
-
 from faker import Faker
-
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)

@@ -2,13 +2,12 @@
 https://docs.pola.rs/
 """
 
+import datetime as dt
 import logging
 import pathlib
-import datetime as dt
 
 import numpy as np
 import polars as pl
-
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
