@@ -27,8 +27,20 @@ duckdb-tutorial: env-up  ## duckdb tutorial
 	poetry run python src/duckdb-tutorial.py
 
 .PHONY: duckdb-billion
-duckdb-billion: ## work with billion rows
+duckdb-billion: env-up  ## duckdb with a billion rows
 	poetry run python src/duckdb-billion.py
+
+.PHONY: polars-tutorial
+polars-tutorial: ## polars tutorial
+	poetry run python src/$@.py
+
+.PHONY: polars-billion
+polars-billion:  ## polars with a billion rows
+	poetry run python src/$@.py
+
+.PHONY: polars-sample-slow
+polars-sample-slow:  ## polars sample timing
+	poetry run python src/$@.py
 
 .PHONY: clean
 clean: env-rm  ## remove temporary files
