@@ -14,6 +14,14 @@ help:  ## help for this Makefile
 tmux:  ## run tmux
 	tmuxp load .tmuxp.yaml
 
+.PHONY: black
+black:  ## run black to format code
+	poetry run black -l79 src
+
+.PHONY: isort
+isort:  ## run isort to order imports
+	poetry run isort src
+
 .PHONY: env-up
 env-up:
 	poetry install
