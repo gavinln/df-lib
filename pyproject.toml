@@ -16,8 +16,12 @@ ipython = "^8.26.0"
 black = "^24.4.2"
 pyarrow = "^17.0.0"
 faker = "^26.1.0"
+vulture = "^2.11"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
