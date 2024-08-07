@@ -1,18 +1,15 @@
 """
-
-
+https://duckdb.org/2024/03/29/external-aggregation.html
 """
 
 import logging
 import pathlib
 import pprint as pp
-
+import tempfile
 from functools import wraps
 from time import time
 
 import duckdb
-import tempfile
-
 
 SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 log = logging.getLogger(__name__)
@@ -190,6 +187,7 @@ def billion_sample_median(con, pq_file, column):
     con.sql(
         "select median({}) from '{}' using sample 1%".format(column, pq_file)
     ).show()
+
 
 @timing
 def billion_sample_avg(con, pq_file, column):

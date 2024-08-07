@@ -265,54 +265,68 @@ def select_sql():
     duckdb.sql("select * from lang").show()
     duckdb.sql("select * from review").show()
     duckdb.sql("select avg(rating) from review").show()
-    duckdb.sql("select avg(rating), lang_id from review group by lang_id").show()
+    duckdb.sql(
+        "select avg(rating), lang_id from review group by lang_id"
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             name, review, rating
         from lang
             inner join review
                 on lang.lang_id = review.lang_id
-    """).show()
+    """
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             name, review, rating
         from lang
             inner join review using(lang_id)
         order by rating desc
-    """).show()
+    """
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             name, review, rating
         from lang
             left join review using(lang_id)
-    """).show()
+    """
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             review, rating
         from review
         where rating = (select max(rating) from review)
-    """).show()
+    """
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             name, avg(rating)
         from lang
             inner join review using(lang_id)
         group by name
-    """).show()
+    """
+    ).show()
 
-    duckdb.sql("""
+    duckdb.sql(
+        """
         select
             name, avg(rating)
         from lang
             inner join review using(lang_id)
         group by name
         having avg(rating) > 4
-    """).show()
+    """
+    ).show()
 
 
 def main():
