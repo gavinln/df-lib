@@ -22,6 +22,14 @@ black:  ## run black to format code
 isort:  ## run isort to order imports
 	poetry run isort src
 
+.PHONY: ray-head-start
+ray-head-start:  ## start ray head
+	poetry run ray start --head --port=6379 --disable-usage-stats
+
+.PHONY: ray-head-stop
+ray-head-stop:  ## stop ray head
+	poetry run ray stop
+
 .PHONY: env-up
 env-up:
 	poetry install
@@ -48,6 +56,18 @@ polars-billion:  ## polars with a billion rows
 
 .PHONY: polars-sample-slow
 polars-sample-slow:  ## polars sample timing
+	poetry run python src/$@.py
+
+.PHONY: ray-task
+ray-task:  ## ray core: task example
+	poetry run python src/ray-core.py $@
+
+.PHONY: ray-actor
+ray-actor:  ## ray core: actor example
+	poetry run python src/ray-core.py $@
+
+.PHONY: ray-tips
+ray-tips:  ## ray tips examples
 	poetry run python src/$@.py
 
 .PHONY: clean

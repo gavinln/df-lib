@@ -20,23 +20,27 @@ Compare Python dataframe and similar libraries
 
 [200]: https://github.com/pola-rs/polars
 
-## Daft
-
-[Daft][300] is a distributed dataframe library for Python designed for the cloud and powered by Rust.
-
-[300]: https://github.com/Eventual-Inc/Daft
-
 ## DuckDB
 
-[DuckDB][400] is an analytical in-process SQL database management system.
+[DuckDB][300] is an analytical in-process SQL database management system.
 
-[400]: https://github.com/duckdb/duckdb
+[300]: https://github.com/duckdb/duckdb
 
 ## Ray
 
-[Ray][500] is a unified framework for scaling Python applications.
+[Ray][400] is a unified framework for scaling Python applications.
 
 [400]: https://github.com/ray-project/ray
+
+The [Ray documentation][410] describes the capabilities of Ray especially for training, tuning and serving machine learning models.
+
+[410]: https://docs.ray.io/en/latest/ray-overview/index.html
+
+## Daft
+
+[Daft][500] is a distributed dataframe library for Python designed for the cloud and powered by Rust.
+
+[500]: https://github.com/Eventual-Inc/Daft
 
 ## Example dataset
 
@@ -51,3 +55,7 @@ https://blobs.duckdb.org/data/G1_1e9_2e0_0_0.csv.zst
 [Phidata][1000] is a Python library that helps build AI assistants with memory, knowledge and tools.
 
 [1000]: https://github.com/phidatahq/phidata
+
+[Dataframe library comparision][1010]
+
+[1010]: https://kestra.io/blogs/2023-08-11-dataframes
