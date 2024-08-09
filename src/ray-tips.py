@@ -191,17 +191,17 @@ def remote_wait_for_next():
 
 
 def main():
-    # no_ray_job()
-    # ray_job()
+    no_ray_job()
+    ray_job()
 
-    # local_tiny_work()
-    # remote_tiny_work()
-    # remote_batched_tiny_work()
+    local_tiny_work()
+    remote_tiny_work()
+    remote_batched_tiny_work()
 
-    # remote_no_work()
+    remote_no_work()
 
-    # remote_large_object_repeat()
-    # remote_large_object_once()
+    remote_large_object_repeat()
+    remote_large_object_once()
 
     remote_wait_for_all()
     remote_wait_for_next()
