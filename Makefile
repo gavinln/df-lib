@@ -70,6 +70,22 @@ ray-actor:  ## ray core: actor example
 ray-tips:  ## ray tips examples
 	poetry run python src/$@.py
 
+.PHONY: ray-env
+ray-env:  ## setup ray environment
+	poetry run python src/$@.py
+
+.PHONY: ray-data-load
+ray-data-load:  ## load data with ray
+	poetry run python src/ray-data.py $@
+
+.PHONY: ray-data-inspect
+ray-data-inspect:  ## inspect data with ray
+	poetry run python src/ray-data.py $@
+
+.PHONY: ray-data-transform
+ray-data-transform:  ## transform data with ray
+	poetry run python src/ray-data.py $@
+
 .PHONY: clean
 clean: env-rm  ## remove temporary files
 	rm -f poetry.lock
