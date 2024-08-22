@@ -14,6 +14,10 @@ help:  ## help for this Makefile
 tmux:  ## run tmux
 	tmuxp load .tmuxp.yaml
 
+.PHONY: devenv-pre-commit
+devenv-pre-commit:  ## run devenv pre-commit
+	devenv test
+
 .PHONY: black
 black:  ## run black to format code
 	poetry run black -l79 src
